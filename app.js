@@ -13,13 +13,23 @@ function starttimer(){
     }
 
 }
+document.addEventListener("DOMContentLoaded", function(){
+    if(localStorage.getItem('best')===null){document.querySelector('.highscore').innerHTML = "Best: None"}
+    else{
+        document.querySelector('.highscore').innerHTML =  "Best: " + localStorage.getItem('best');
+    }
+});
 
-
-
+var inp = document.getElementById('name');
 $("#start").click(function (){
+   if(inp.value===""){
+        inp.focus();
+   }else{
     $('.intro').fadeOut();
     $("#cardbox").fadeIn();
     starttimer();
+
+   }
 
 });
 
@@ -78,23 +88,21 @@ window.addEventListener('click', function (e) {
     var x = document.getElementsByClassName('done');
     if(x.length==16){
         alert("You Completed The game in "+ (60-time) +" seconds and with "+(8-counter) +" guesses remaining!!!" );
+        var local = localStorage.getItem('best');
+        if(local===null){localStorage.setItem('best', (60-time));}
+        else{
+            if((60-time) < local){localStorage.setItem('best', (60-time));}
+        }
+        
+
         location.reload();
     }
     if(counter==8){
         alert("Out of Guesses");
         location.reload();
     }
-  
+}
+});
 
-        
-
-
-        
-        
-
-      
-
-    }
-    });
 
 
